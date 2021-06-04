@@ -4,8 +4,10 @@ const portfinder = require('portfinder-sync')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
@@ -17,7 +19,7 @@ const isDev = process.env.NODE_ENV === 'development'
 const config = {
   mode: isDev ? 'development' : 'production',
   target: isDev ? 'web' : 'browserslist',
-  entry: './src/index.js',
+  entry: './src/js/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'assets/js/main.js',
@@ -30,8 +32,9 @@ const config = {
     port: portfinder.getPort(8000),
     useLocalIp: true,
     watchContentBase: true,
+    hot: true,
   },
-  devtool: isDev ? 'eval' : false,
+  devtool: isDev ? 'eval-cheap-source-map' : false,
   module: {
     rules: [
       {
@@ -69,7 +72,6 @@ const config = {
                   if (/^\//.test(value)) {
                     return false
                   }
-
                   return true
                 },
               },
@@ -84,6 +86,10 @@ const config = {
         ],
       },
       {
+        test: /\.(sa|sc|c)ss$/i,
+        use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+      },
+      {
         test: /\.(jpe?g|png)$/i,
         type: 'asset',
       },
@@ -91,8 +97,14 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      alwaysWriteToDisk: true,
       filename: 'index.html',
       template: path.resolve(__dirname, './pages/index.ejs'),
+    }),
+    new HtmlWebpackHarddiskPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'assets/css/[name].css',
+      // chunkFilename: '[id].css',
     }),
     new ImageMinimizerPlugin({
       minimizerOptions: {
@@ -110,6 +122,7 @@ const config = {
       new TerserPlugin({
         parallel: true,
       }),
+      new CssMinimizerPlugin(),
     ],
   },
   resolve: {

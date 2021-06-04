@@ -1,0 +1,94 @@
+@use '../vars/mixins';
+@use '../vars/variables';
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  width: variables.$content-width;
+
+  @include mixins.media-sm {
+    width: variables.$content-width-sm;
+  }
+  @include mixins.media-md {
+    width: variables.$content-width-md;
+  }
+  @include mixins.media-lg {
+    width: variables.$content-width-lg;
+  }
+  @include mixins.media-xl {
+    width: variables.$content-width-xl;
+  }
+  @include mixins.media-xxl {
+    width: variables.$content-width-xxl;
+  }
+}
+
+.sm\:container {
+  @include mixins.media-sm {
+    margin-left: auto;
+    margin-right: auto;
+    width: variables.$content-width-sm;
+  }
+  @include mixins.media-md {
+    width: variables.$content-width-md;
+  }
+  @include mixins.media-lg {
+    width: variables.$content-width-lg;
+  }
+  @include mixins.media-xl {
+    width: variables.$content-width-xl;
+  }
+  @include mixins.media-xxl {
+    width: variables.$content-width-xxl;
+  }
+}
+
+.md\:container {
+  @include mixins.media-md {
+    margin-left: auto;
+    margin-right: auto;
+    width: variables.$content-width-md;
+  }
+  @include mixins.media-lg {
+    width: variables.$content-width-lg;
+  }
+  @include mixins.media-xl {
+    width: variables.$content-width-xl;
+  }
+  @include mixins.media-xxl {
+    width: variables.$content-width-xxl;
+  }
+}
+
+.lg\:container {
+  @include mixins.media-lg {
+    margin-left: auto;
+    margin-right: auto;
+    width: variables.$content-width-lg;
+  }
+  @include mixins.media-xl {
+    width: variables.$content-width-xl;
+  }
+  @include mixins.media-xxl {
+    width: variables.$content-width-xxl;
+  }
+}
+
+.xl\:container {
+  @include mixins.media-xl {
+    margin-left: auto;
+    margin-right: auto;
+    width: variables.$content-width-xl;
+  }
+  @include mixins.media-xxl {
+    width: variables.$content-width-xxl;
+  }
+}
+
+.xxl\:container {
+  @include mixins.media-xxl {
+    margin-left: auto;
+    margin-right: auto;
+    width: variables.$content-width-xxl;
+  }
+}

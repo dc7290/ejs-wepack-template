@@ -1,3 +1,7 @@
+// No deletions from here
+import './scss/index.scss'
+// to here.
+
 const app = document.getElementById('app')
 
 app.innerHTML = `<h1 class="title">Compilation succeeded!</h1>

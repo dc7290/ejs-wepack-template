@@ -1,0 +1,28 @@
+@use '../variables';
+
+@mixin media-sm {
+  @media (min-width: variables.$break-point-sm) {
+    @content;
+  }
+}
+
+@mixin media-md {
+  @media (min-width: variables.$break-point-md) {
+    @content;
+  }
+}
+@mixin media-lg {
+  @media (min-width: variables.$break-point-lg) {
+    @content;
+  }
+}
+@mixin media-xl {
+  @media (min-width: variables.$break-point-xl) {
+    @content;
+  }
+}
+@mixin media-xxl {
+  @media (min-width: variables.$break-point-xxl) {
+    @content;
+  }
+}

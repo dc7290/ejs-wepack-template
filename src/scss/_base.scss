@@ -1,0 +1,13 @@
+@use './vars/variables';
+
+@import 'normalize.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  color: variables.$color-black;
+}
