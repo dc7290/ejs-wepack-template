@@ -1,0 +1,35 @@
+{
+  "name": "ejs-wepack-template",
+  "version": "0.1.0",
+  "repository": "git@github.com:dc7290/ejs-wepack-template.git",
+  "author": "dc7290",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development webpack serve --progress",
+    "build": "webpack --progress"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.0",
+    "core-js": "3.13.1",
+    "css-minimizer-webpack-plugin": "^3.0.1",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.1",
+    "image-minimizer-webpack-plugin": "^2.2.0",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-svgo": "^9.0.0",
+    "portfinder-sync": "^0.0.2",
+    "template-ejs-loader": "^0.3.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "browserslist": [
+    "defaults"
+  ]
+}
