@@ -1,5 +1,6 @@
 const path = require('path')
 
+const globby = require('globby')
 const portfinder = require('portfinder-sync')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -10,6 +11,8 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+
+const { extendDefaultPlugins } = require('svgo')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -23,7 +26,6 @@ const config = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'assets/js/main.js',
-    assetModuleFilename: 'assets/images/[name]-[contenthash][ext]',
   },
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),
@@ -33,6 +35,9 @@ const config = {
     useLocalIp: true,
     watchContentBase: true,
     hot: true,
+  },
+  cache: {
+    type: 'filesystem',
   },
   devtool: isDev ? 'eval-cheap-source-map' : false,
   module: {
@@ -90,30 +95,50 @@ const config = {
         use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
-        test: /\.(jpe?g|png)$/i,
+        test: /\.(jpe?g|png|gif|svg)$/i,
         type: 'asset',
+        use: {
+          loader: ImageMinimizerPlugin.loader,
+          options: {
+            minimizerOptions: {
+              plugins: [
+                ['gifsicle', { interlaced: true }],
+                ['mozjpeg', { quality: 75, progressive: true }],
+                ['pngquant', { quality: [0.6, 0.8] }],
+                ['svgo', { plugins: extendDefaultPlugins([{ name: 'removeViewBox', active: false }]) }],
+              ],
+            },
+          },
+        },
+        generator: {
+          filename({ filename }) {
+            return filename.replace(/^src/, 'assets')
+          },
+        },
+      },
+      {
+        test: /\.(jpe?g|png)$/i,
+        resourceQuery: /webp/,
+        use: {
+          loader: ImageMinimizerPlugin.loader,
+          options: {
+            minimizerOptions: {
+              plugins: [['imagemin-webp', { quality: 85 }]],
+            },
+          },
+        },
+        type: 'asset',
+        generator: {
+          filename({ filename }) {
+            return filename.replace(/^src/, 'assets').replace(/\.(jpe?g|png)$/i, '.webp')
+          },
+        },
       },
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      alwaysWriteToDisk: true,
-      filename: 'index.html',
-      template: path.resolve(__dirname, './pages/index.ejs'),
-    }),
-    new HtmlWebpackHarddiskPlugin(),
-    new MiniCssExtractPlugin({
-      filename: 'assets/css/[name].css',
-      // chunkFilename: '[id].css',
-    }),
-    new ImageMinimizerPlugin({
-      minimizerOptions: {
-        plugins: [['gifsicle', { interlaced: true }], ['mozjpeg'], ['pngquant'], ['svgo']],
-      },
-    }),
-    new CopyPlugin({
-      patterns: [{ from: 'public', to: '' }],
-    }),
+    new MiniCssExtractPlugin({ filename: 'assets/css/[name].css' }),
+    new CopyPlugin({ patterns: [{ from: 'public', to: '' }] }),
     new CleanWebpackPlugin(),
   ],
   stats: isDev ? 'minimal' : 'normal',
@@ -134,4 +159,19 @@ const config = {
   },
 }
 
-module.exports = config
+module.exports = async () => {
+  const staticPaths = await globby(['pages/**/index.ejs'])
+  staticPaths.forEach((staticPath) => {
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        alwaysWriteToDisk: true,
+        filename: staticPath.replace(/^pages\//, '').replace(/\.ejs$/, '.html'),
+        template: path.resolve(__dirname, staticPath),
+      })
+    )
+  })
+
+  config.plugins.push(new HtmlWebpackHarddiskPlugin())
+
+  return config
+}
