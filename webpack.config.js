@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 
 const globby = require('globby')
@@ -147,12 +148,7 @@ const config = {
   ],
   stats: isDev ? 'minimal' : 'normal',
   optimization: {
-    minimizer: [
-      new TerserPlugin({
-        parallel: true,
-      }),
-      new CssMinimizerPlugin(),
-    ],
+    minimizer: [new TerserPlugin({ parallel: true }), new CssMinimizerPlugin()],
   },
   resolve: {
     alias: {
@@ -164,7 +160,8 @@ const config = {
 }
 
 module.exports = async () => {
-  const staticPaths = await globby(['pages/**/index.ejs'])
+  const [staticPaths, dynamicPaths] = await Promise.all([globby('pages/**/index.ejs'), globby(['pages/**/[*.ejs'])])
+
   staticPaths.forEach((staticPath) => {
     config.plugins.push(
       new HtmlWebpackPlugin({
@@ -173,6 +170,35 @@ module.exports = async () => {
         template: path.resolve(__dirname, staticPath),
       })
     )
+  })
+
+  dynamicPaths.forEach((dynamicPath) => {
+    if (!dynamicPath.endsWith('].ejs')) {
+      throw Error(`"${dynamicPath}": []でファイル名を囲ってください。(例: [userId].ejs)`)
+    }
+
+    const source = fs.readFileSync(path.resolve(__dirname, dynamicPath), 'utf-8')
+    const dataForGenerated = source.match(/<%#([^%]*)%>/)[1]
+    const dataJsonPath = dataForGenerated.match(/data:\s*(["'`])(.*)\1/)[2]
+    const params = dataForGenerated.match(/paramsKey:\s*(["'`])(.*)\1/)[2]
+
+    const contents = JSON.parse(fs.readFileSync(path.resolve(__dirname, dataJsonPath), 'utf-8'))
+    contents.forEach((content, i) => {
+      config.plugins.push(
+        new HtmlWebpackPlugin({
+          alwaysWriteToDisk: true,
+          filename: dynamicPath
+            .replace(/^pages\//, '')
+            .replace(/\[.*\]/, `${content[params]}/`)
+            .replace(/\.ejs$/, 'index.html'),
+          template: path.resolve(__dirname, dynamicPath),
+          templateParameters: {
+            data: content,
+            index: i,
+          },
+        })
+      )
+    })
   })
 
   config.plugins.push(new HtmlWebpackHarddiskPlugin())

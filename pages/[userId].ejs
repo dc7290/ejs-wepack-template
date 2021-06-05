@@ -1,0 +1,13 @@
+<%#
+data: 'src/data/users.json'
+paramsKey: 'id'
+%>
+
+<%- include('/header.ejs') %>
+
+<div class="container">
+  <h1><%= htmlWebpackPlugin.options.data.id %></h1>
+  <p><%= htmlWebpackPlugin.options.data.name %></p>
+</div>
+
+<%- include('/footer.ejs') %>

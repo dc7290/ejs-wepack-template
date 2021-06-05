@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "dc7290",
   "scripts": {
+    "analyze": "webpack --progress --analyze",
     "serve": "http-server dist -o /",
     "start": "NODE_ENV=development webpack serve --progress",
     "build": "webpack --progress"
@@ -59,6 +60,7 @@
     "stylelint-webpack-plugin": "^2.1.1",
     "template-ejs-loader": "^0.3.2",
     "webpack": "^5.38.1",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2"
   }
