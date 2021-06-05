@@ -28,6 +28,8 @@
     "core-js": "3.13.1",
     "css-loader": "^5.2.6",
     "css-minimizer-webpack-plugin": "^3.0.1",
+    "eslint": "^7.28.0",
+    "eslint-webpack-plugin": "^2.5.4",
     "globby": "^11.0.3",
     "html-loader": "^2.1.2",
     "html-webpack-harddisk-plugin": "^2.0.0",

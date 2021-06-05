@@ -12,6 +12,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const StylelintPlugin = require('stylelint-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 const { extendDefaultPlugins } = require('svgo')
 
@@ -142,6 +143,7 @@ const config = {
     new CopyPlugin({ patterns: [{ from: 'public', to: '' }] }),
     new CleanWebpackPlugin(),
     new StylelintPlugin({ files: './src/scss/**/*.scss', fix: true, lintDirtyModulesOnly: isDev ? true : false }),
+    new ESLintPlugin({ lintDirtyModulesOnly: isDev ? true : false }),
   ],
   stats: isDev ? 'minimal' : 'normal',
   optimization: {
