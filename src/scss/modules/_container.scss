@@ -2,9 +2,9 @@
 @use '../vars/variables';
 
 .container {
-  margin-left: auto;
-  margin-right: auto;
   width: variables.$content-width;
+  margin-right: auto;
+  margin-left: auto;
 
   @include mixins.media-sm {
     width: variables.$content-width-sm;
@@ -25,9 +25,9 @@
 
 .sm\:container {
   @include mixins.media-sm {
-    margin-left: auto;
-    margin-right: auto;
     width: variables.$content-width-sm;
+    margin-right: auto;
+    margin-left: auto;
   }
   @include mixins.media-md {
     width: variables.$content-width-md;
@@ -45,9 +45,9 @@
 
 .md\:container {
   @include mixins.media-md {
-    margin-left: auto;
-    margin-right: auto;
     width: variables.$content-width-md;
+    margin-right: auto;
+    margin-left: auto;
   }
   @include mixins.media-lg {
     width: variables.$content-width-lg;
@@ -62,9 +62,9 @@
 
 .lg\:container {
   @include mixins.media-lg {
-    margin-left: auto;
-    margin-right: auto;
     width: variables.$content-width-lg;
+    margin-right: auto;
+    margin-left: auto;
   }
   @include mixins.media-xl {
     width: variables.$content-width-xl;
@@ -76,9 +76,9 @@
 
 .xl\:container {
   @include mixins.media-xl {
-    margin-left: auto;
-    margin-right: auto;
     width: variables.$content-width-xl;
+    margin-right: auto;
+    margin-left: auto;
   }
   @include mixins.media-xxl {
     width: variables.$content-width-xxl;
@@ -87,8 +87,8 @@
 
 .xxl\:container {
   @include mixins.media-xxl {
-    margin-left: auto;
-    margin-right: auto;
     width: variables.$content-width-xxl;
+    margin-right: auto;
+    margin-left: auto;
   }
 }

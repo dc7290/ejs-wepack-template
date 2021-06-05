@@ -11,6 +11,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const StylelintPlugin = require('stylelint-webpack-plugin')
 
 const { extendDefaultPlugins } = require('svgo')
 
@@ -137,9 +138,10 @@ const config = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: 'assets/css/[name].css' }),
+    new MiniCssExtractPlugin({ filename: 'assets/css/[name].css', chunkFilename: 'assets/css/[id].css' }),
     new CopyPlugin({ patterns: [{ from: 'public', to: '' }] }),
     new CleanWebpackPlugin(),
+    new StylelintPlugin({ files: './src/scss/**/*.scss', fix: true, lintDirtyModulesOnly: isDev ? true : false }),
   ],
   stats: isDev ? 'minimal' : 'normal',
   optimization: {
