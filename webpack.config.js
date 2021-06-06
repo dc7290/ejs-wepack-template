@@ -3,6 +3,7 @@ const path = require('path')
 
 const globby = require('globby')
 const portfinder = require('portfinder-sync')
+const queryString = require('query-string')
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -140,7 +141,7 @@ const config = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: 'assets/css/[name].css', chunkFilename: 'assets/css/[id].css' }),
+    new MiniCssExtractPlugin({ filename: 'assets/css/[name].css' }),
     new CopyPlugin({ patterns: [{ from: 'public', to: '' }] }),
     new CleanWebpackPlugin(),
     new StylelintPlugin({ files: './src/scss/**/*.scss', fix: true, lintDirtyModulesOnly: isDev ? true : false }),
@@ -179,7 +180,7 @@ module.exports = async () => {
 
     const source = fs.readFileSync(path.resolve(__dirname, dynamicPath), 'utf-8')
     const dataForGenerated = source.match(/<%#([^%]*)%>/)[1]
-    const dataJsonPath = dataForGenerated.match(/data:\s*(["'`])(.*)\1/)[2]
+    const dataJsonPath = dataForGenerated.match(/dataFile:\s*(["'`])(.*)\1/)[2]
     const params = dataForGenerated.match(/paramsKey:\s*(["'`])(.*)\1/)[2]
 
     const contents = JSON.parse(fs.readFileSync(path.resolve(__dirname, dataJsonPath), 'utf-8'))
@@ -191,11 +192,12 @@ module.exports = async () => {
             .replace(/^pages\//, '')
             .replace(/\[.*\]/, `${content[params]}/`)
             .replace(/\.ejs$/, 'index.html'),
-          template: path.resolve(__dirname, dynamicPath),
-          templateParameters: {
-            data: content,
-            index: i,
-          },
+          template: `!${require.resolve('html-loader')}??ruleSet[1].rules[1].use[0]!${require.resolve(
+            'template-ejs-loader'
+          )}?${queryString.stringify({
+            root: path.resolve(__dirname, './src/components'),
+            data: JSON.stringify({ data: content, index: i }),
+          })}!${path.resolve(__dirname, dynamicPath)}`,
         })
       )
     })

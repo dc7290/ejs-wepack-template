@@ -1,13 +1,17 @@
 <%#
-data: 'src/data/users.json'
+dataFile: 'src/data/users.json'
 paramsKey: 'id'
 %>
 
 <%- include('/header.ejs') %>
 
 <div class="container">
-  <h1><%= htmlWebpackPlugin.options.data.id %></h1>
-  <p><%= htmlWebpackPlugin.options.data.name %></p>
+  <h1><%= data.id %></h1>
+  <p><%= data.name %></p>
+
+  <p>You are the <%= index %>th user.</p>
+
+  <a href="/" style="display: block; margin-top: 50px;">Top</a>
 </div>
 
 <%- include('/footer.ejs') %>

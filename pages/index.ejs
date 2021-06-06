@@ -1,7 +1,20 @@
 <%- include('/header.ejs') %>
 
+<% const users = require('../src/data/users.json') %>
+
 <div id="app"></div>
 <div class="container">
+  <ul style="display: flex; list-style: none; gap: 20px;">
+    <li>
+      <a href="/about">About</a>
+    </li>
+    <% users.forEach(user => { %>
+    <li>
+      <a href="/<%= user.id %>"><%= user.id.replace(/^(.)/, '$1'.toUpperCase()) %></a>
+    </li>
+    <% }) %>
+  </ul>
+
   <img src="../src/images/image.png?webp" style="width: 100%;" />
   <img src="~~src/images/image.png" style="width: 100%;" />
   <img src="~src/images/image.png" style="width: 100%;" />
