@@ -3,7 +3,12 @@ dataFile: 'src/data/users.json'
 paramsKey: 'id'
 %>
 
-<%- include('/header.ejs') %>
+<%- include('/header', {
+  meta: {
+    title: data.id.toUpperCase(),
+    description: '',
+  },
+}) %>
 
 <div class="container">
   <h1><%= data.id %></h1>
@@ -14,4 +19,4 @@ paramsKey: 'id'
   <a href="/" style="display: block; margin-top: 50px;">Top</a>
 </div>
 
-<%- include('/footer.ejs') %>
+<%- include('/footer') %>

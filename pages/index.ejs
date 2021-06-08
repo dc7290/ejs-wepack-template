@@ -1,6 +1,20 @@
-<%- include('/header.ejs') %>
+<%- include('/header', {
+  meta: {
+    title: 'TOP',
+    description: '',
+  },
+}) %>
 
 <% const users = require('../src/data/users.json') %>
+
+<style>
+.title {
+  text-align: center;
+}
+.body {
+  text-align: center;
+}
+</style>
 
 <div id="app"></div>
 <div class="container">
@@ -21,4 +35,4 @@
   <img src="~images/image.png" style="width: 100%;" />
 </div>
 
-<%- include('/footer.ejs') %>
+<%- include('/footer') %>
