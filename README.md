@@ -6,8 +6,10 @@ webpack のスターターキットです。
 ## 目次
 
 - [特徴](#features)
+- [使い方](#usage)
 - [ディレクトリ構造](#directory)
 - [画像](#image)
+- [ejs ファイルでの注意点](#ejs-note)
 
 ## <a name="features"></a>特徴
 
@@ -17,7 +19,7 @@ webpack のスターターキットです。
 - ESLint,Stylelint を設定済み
 - autoprefixer,babel でクロスブラウザ対応
 
-## 使い方
+## <a name="usage"></a>使い方
 
 #### 開発
 
@@ -123,7 +125,7 @@ pages/[userId].ejs → /user01/index.html, /user02/index.html, ....
 <img src="~images/image.png" />
 ```
 
-## ejs ファイルでの注意点
+## <a name="ejs-note"></a>ejs ファイルでの注意点
 
 - include()でのパスの指定
 
