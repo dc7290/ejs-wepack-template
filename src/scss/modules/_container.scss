@@ -6,87 +6,87 @@
   margin-right: auto;
   margin-left: auto;
 
-  @include mixins.media-sm {
+  @include mixins.media(sm) {
     width: variables.$content-width-sm;
   }
-  @include mixins.media-md {
+  @include mixins.media(md) {
     width: variables.$content-width-md;
   }
-  @include mixins.media-lg {
+  @include mixins.media(lg) {
     width: variables.$content-width-lg;
   }
-  @include mixins.media-xl {
+  @include mixins.media(xl) {
     width: variables.$content-width-xl;
   }
-  @include mixins.media-xxl {
+  @include mixins.media(xxl) {
     width: variables.$content-width-xxl;
   }
 }
 
 .sm\:container {
-  @include mixins.media-sm {
+  @include mixins.media(sm) {
     width: variables.$content-width-sm;
     margin-right: auto;
     margin-left: auto;
   }
-  @include mixins.media-md {
+  @include mixins.media(md) {
     width: variables.$content-width-md;
   }
-  @include mixins.media-lg {
+  @include mixins.media(lg) {
     width: variables.$content-width-lg;
   }
-  @include mixins.media-xl {
+  @include mixins.media(xl) {
     width: variables.$content-width-xl;
   }
-  @include mixins.media-xxl {
+  @include mixins.media(xxl) {
     width: variables.$content-width-xxl;
   }
 }
 
 .md\:container {
-  @include mixins.media-md {
+  @include mixins.media(md) {
     width: variables.$content-width-md;
     margin-right: auto;
     margin-left: auto;
   }
-  @include mixins.media-lg {
+  @include mixins.media(lg) {
     width: variables.$content-width-lg;
   }
-  @include mixins.media-xl {
+  @include mixins.media(xl) {
     width: variables.$content-width-xl;
   }
-  @include mixins.media-xxl {
+  @include mixins.media(xxl) {
     width: variables.$content-width-xxl;
   }
 }
 
 .lg\:container {
-  @include mixins.media-lg {
+  @include mixins.media(lg) {
     width: variables.$content-width-lg;
     margin-right: auto;
     margin-left: auto;
   }
-  @include mixins.media-xl {
+  @include mixins.media(xl) {
     width: variables.$content-width-xl;
   }
-  @include mixins.media-xxl {
+  @include mixins.media(xxl) {
     width: variables.$content-width-xxl;
   }
 }
 
 .xl\:container {
-  @include mixins.media-xl {
+  @include mixins.media(xl) {
     width: variables.$content-width-xl;
     margin-right: auto;
     margin-left: auto;
   }
-  @include mixins.media-xxl {
+  @include mixins.media(xxl) {
     width: variables.$content-width-xxl;
   }
 }
 
 .xxl\:container {
-  @include mixins.media-xxl {
+  @include mixins.media(xxl) {
     width: variables.$content-width-xxl;
     margin-right: auto;
     margin-left: auto;

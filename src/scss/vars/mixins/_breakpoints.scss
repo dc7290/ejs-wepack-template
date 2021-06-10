@@ -1,28 +1,14 @@
+@use 'sass:map';
+@use 'sass:meta';
+
 @use '../variables';
 
-@mixin media-sm {
-  @media (min-width: variables.$break-point-sm) {
-    @content;
-  }
-}
-
-@mixin media-md {
-  @media (min-width: variables.$break-point-md) {
-    @content;
-  }
-}
-@mixin media-lg {
-  @media (min-width: variables.$break-point-lg) {
-    @content;
-  }
-}
-@mixin media-xl {
-  @media (min-width: variables.$break-point-xl) {
-    @content;
-  }
-}
-@mixin media-xxl {
-  @media (min-width: variables.$break-point-xxl) {
-    @content;
+@mixin media($breakpoint) {
+  @if map.has-key(variables.$breakpoints, $breakpoint) {
+    @media (min-width: #{meta.inspect(map.get(variables.$breakpoints, $breakpoint))}) {
+      @content;
+    }
+  } @else {
+    @error "指定されたブレークポイントは定義されていません。" + "指定できるブレークポイントは次のとおりです。 -> #{map.keys($breakpoints)}";
   }
 }

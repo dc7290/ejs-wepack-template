@@ -21,7 +21,7 @@ webpack のスターターキットです。
 
 ## <a name="usage"></a>使い方
 
-#### 開発
+### 開発
 
 1. このリポジトリをクローン、または zip ファイルでダウンロードして、ローカルで開いてください。
 
@@ -34,7 +34,7 @@ yarn start # npm start
 
 自動でローカルサーバーが立ち上がるので、それぞれのファイルを編集して作業します。
 
-#### 本番
+### 本番
 
 ビルドするには次のコマンドを実行します。
 
@@ -77,8 +77,7 @@ paramsKey: 'id' <!-- ルーティングに用いたいデータのkeyパラメ�
   {
     "id": "user02",
     "name": "Jon"
-  },
-  ...
+  }
 ]
 ```
 
@@ -135,7 +134,7 @@ pages/[userId].ejs → /user01/index.html, /user02/index.html, ....
 <%- include('/header.ejs') %>
 ```
 
-`src/components/header.ejs`という指定になります。
+これで`src/components/header.ejs`という指定になります。  
 (ejs オプションの`root`に `src/components` を指定しているため)
 
 - 動的ルート
@@ -166,3 +165,158 @@ json ファイルへのパスとルーティングのときの URL に使う値�
 `h1`には、
 /user01/index.html では`user01`が、
 /user02/index.html では`user02`が入ります。
+
+## 元から入っている ejs,scss,js ファイル
+
+ある程度汎用的な記述はすでに用意しているものがあるので、解説します。
+
+### scss
+
+#### mixin
+
+- メディアクエリ
+
+メディアクエリを簡潔に。
+
+`scss/vars/mixins/__breakpoints.scss`
+
+```scss
+@use 'sass:map';
+@use 'sass:meta';
+
+@use '../variables';
+
+@mixin media($breakpoint) {
+  @if map.has-key(variables.$breakpoints, $breakpoint) {
+    @media (min-width: #{meta.inspect(map.get(variables.$breakpoints, $breakpoint))}) {
+      @content;
+    }
+  } @else {
+    @error "指定されたブレークポイントは定義されていません。" + "指定できるブレークポイントは次のとおりです。 -> #{map.keys($breakpoints)}";
+  }
+}
+```
+
+`使う側のscss`
+
+```scss
+@use '../vars/mixins';
+
+.title {
+  @include mixins.media(sm) {
+    // 640px 以上のスタイル
+  }
+}
+```
+
+### variables
+
+scss 変数。
+
+`scss/vars/_variables.scss`
+
+```scss
+/* break points */
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1536px,
+);
+
+/* content width */
+$content-width: 85vw;
+$content-width-sm: 600px;
+$content-width-md: 720px;
+$content-width-lg: 960px;
+$content-width-xl: 1180px;
+$content-width-xxl: 1400px;
+
+/* colors */
+$color-black: #333;
+```
+
+- $breakpoints
+
+メディアクエリの mixin で用いている値です。
+ブレイクポイントをここで管理することで、情報を一元化します。
+
+- $content-width
+
+この後に紹介する`.container`のスタイルに用いる変数です。
+
+- $color
+
+プロジェクトごとの色を管理します。
+IE 対応の必要がなければ、css 変数を用いた方がアニメーションで用いたりできるので、便利かと思います。
+
+### container クラス
+
+`scss/modules/_container.scss`
+
+```scss
+@use '../vars/mixins';
+@use '../vars/variables';
+
+.container {
+  width: variables.$content-width;
+  margin-right: auto;
+  margin-left: auto;
+
+  @include mixins.media(sm) {
+    width: variables.$content-width-sm;
+  }
+  @include mixins.media(md) {
+    width: variables.$content-width-md;
+  }
+  @include mixins.media(lg) {
+    width: variables.$content-width-lg;
+  }
+  @include mixins.media(xl) {
+    width: variables.$content-width-xl;
+  }
+  @include mixins.media(xxl) {
+    width: variables.$content-width-xxl;
+  }
+}
+
+.sm\:container {
+  @include mixins.media(sm) {
+    width: variables.$content-width-sm;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  @include mixins.media(md) {
+    width: variables.$content-width-md;
+  }
+  @include mixins.media(lg) {
+    width: variables.$content-width-lg;
+  }
+  @include mixins.media(xl) {
+    width: variables.$content-width-xl;
+  }
+  @include mixins.media(xxl) {
+    width: variables.$content-width-xxl;
+  }
+}
+
+.md\:container {
+  @include mixins.media(md) {
+    width: variables.$content-width-md;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  @include mixins.media(lg) {
+    width: variables.$content-width-lg;
+  }
+...
+```
+
+いわゆる container クラスです。
+設定ファイルの$content-width を元に width を決めて、mx-auto のスタイルです。
+
+それぞれのブレイクポイント以上でのみ効く container クラスも用意しています。
+例: .md:container -> 768px 以上で container
+
+## js

@@ -39,6 +39,7 @@ const config = {
     useLocalIp: true,
     watchContentBase: true,
     hot: true,
+    hotOnly: true,
   },
   cache: {
     type: 'filesystem',
@@ -141,6 +142,7 @@ const config = {
     ],
   },
   plugins: [
+    new HtmlWebpackHarddiskPlugin(),
     new MiniCssExtractPlugin({ filename: 'assets/css/[name].css' }),
     new CopyPlugin({ patterns: [{ from: 'public', to: '' }] }),
     new CleanWebpackPlugin(),
@@ -202,8 +204,6 @@ module.exports = async () => {
       )
     })
   })
-
-  config.plugins.push(new HtmlWebpackHarddiskPlugin())
 
   return config
 }

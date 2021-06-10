@@ -1,9 +1,11 @@
 /* break points */
-$break-point-sm: 640px;
-$break-point-md: 768px;
-$break-point-lg: 1024px;
-$break-point-xl: 1280px;
-$break-point-xxl: 1536px;
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1536px,
+);
 
 /* content width */
 $content-width: 85vw;
