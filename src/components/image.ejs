@@ -1,0 +1,23 @@
+<%# {
+  src: string
+  width?: number
+  height?: number
+  alt?: string
+  className?: string
+  lazy?: boolean
+} %>
+
+<%
+if (typeof src === 'undefined') throw Error('src is undefined')
+if (typeof width === 'undefined') width = null
+if (typeof height === 'undefined') height = null
+if (typeof alt === 'undefined') alt = ''
+if (typeof className === 'undefined') className = ''
+if (typeof lazy === 'undefined') lazy = true
+%>
+
+<picture>
+  <source <% if (lazy) { %>data-<% } %>srcset="<%= src + '?webp' %>" type="image/webp" />
+  <img <% if (lazy) { %>data-<% } %>src="<%= src %>" width="<%= width ?? '' %>" height="<%= height ?? '' %>" alt="<%= alt %>" class="lazyload <%= className %>" />
+</picture>
+

@@ -7493,10 +7493,10 @@ tempfile@^2.0.0:
     temp-dir "^1.0.0"
     uuid "^3.0.1"
 
-template-ejs-loader@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/template-ejs-loader/-/template-ejs-loader-0.4.0.tgz#9c5cfd751641c0f4210a8c56a32237f9b4498bc2"
-  integrity sha512-Ln2HZe868B/07ekoa9hn/yI36ZIKkR44MFdoP5sXJmXJTXWmot55ypPqWZrx9u2jtMOOttrizU+Ckjd5/e4MkQ==
+template-ejs-loader@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/template-ejs-loader/-/template-ejs-loader-0.4.6.tgz#8aaf19cee43282bb12338e7242471de3e6e7188c"
+  integrity sha512-UO/ck2C480RQL6mctnHDpz0xwQU8gUU5Ux/DKgOa4QqztEQl5+ULnXnCFqG7mS6gbtT2supY4punvG6laT022w==
   dependencies:
     ejs "^3.1.6"
 

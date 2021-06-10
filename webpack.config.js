@@ -77,6 +77,11 @@ const config = {
                     attribute: 'data-srcset',
                     type: 'srcset',
                   },
+                  {
+                    tag: 'source',
+                    attribute: 'data-srcset',
+                    type: 'srcset',
+                  },
                 ],
                 urlFilter: (_, value) => {
                   if (/^\//.test(value)) {

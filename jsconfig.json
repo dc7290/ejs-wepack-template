@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "target": "es2020",
+    "module": "es2015",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./*"],
+      "src/*": ["./src/*"],
+      "images/*": ["./src/images/*"]
+    }
+  },
+  "exclude": ["dist", "node_modules", ".vscode"],
+  "typeAcquisition": {
+    "enable": true
+  }
+}
