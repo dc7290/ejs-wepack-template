@@ -60,11 +60,10 @@ ejs ファイル内にどうルーティングするのかを設定します。
 
 `[userId].ejs`
 
-```html
-<%# dataFile: 'src/data/users.json'
-<!-- 繰り返したいデータを記述したjsonファイルへのパス -->
-paramsKey: 'id'
-<!-- ルーティングに用いたいデータのkeyパラメータ -->
+``` html
+<%#
+dataFile: 'src/data/users.json' <!-- 繰り返したいデータを記述したjsonファイルへのパス -->
+paramsKey: 'id' <!-- ルーティングに用いたいデータのkeyパラメータ -->
 %>
 ```
 
