@@ -14,10 +14,10 @@ webpack のスターターキットです。
 
 ## <a name="features"></a>特徴
 
-- ejs,scss
+- ejs, scss
 - ディレクトリ構造に基づいてルーティングを決定
 - 画像を自動で最適化
-- ESLint,Stylelint を設定済み
+- ESLint, Stylelint を設定済み
 - autoprefixer, babel でクロスブラウザ対応
 
 ## <a name="usage"></a>使い方
