@@ -30,7 +30,7 @@ webpack のスターターキットです。
 
 ```bash
 yarn # npm i
-yarn start # npm start
+yarn dev # npm run dev
 ```
 
 自動でローカルサーバーが立ち上がるので、それぞれのファイルを編集して作業します。

@@ -42,7 +42,7 @@ const config = {
     hotOnly: true,
   },
   cache: {
-    type: 'filesystem',
+    type: 'memory',
   },
   devtool: isDev ? 'eval-cheap-source-map' : false,
   module: {
@@ -53,7 +53,7 @@ const config = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [['@babel/preset-env', { useBuiltIns: 'usage', corejs: '3.13', targets: 'defaults' }]],
+            presets: [['@babel/preset-env', { useBuiltIns: 'usage', corejs: '3', targets: 'defaults' }]],
             cacheDirectory: true,
           },
         },
@@ -102,7 +102,19 @@ const config = {
       },
       {
         test: /\.(sa|sc|c)ss$/i,
-        use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [
+          isDev
+            ? 'style-loader'
+            : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: '../../',
+                },
+              },
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
