@@ -29,7 +29,7 @@ const config = {
   entry: './src/js/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'assets/js/main.js',
+    filename: 'assets/js/main-[contenthash].js',
   },
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),
@@ -106,7 +106,7 @@ const config = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        type: 'asset',
+        resourceQuery: { not: /webp/ },
         use: {
           loader: ImageMinimizerPlugin.loader,
           options: {
@@ -120,9 +120,10 @@ const config = {
             },
           },
         },
+        type: 'asset',
         generator: {
           filename({ filename }) {
-            return filename.replace(/^src/, 'assets')
+            return filename.replace(/^src/, 'assets').replace(/\.(jpe?g|png)/, '') + '-[contenthash][ext]'
           },
         },
       },
@@ -140,7 +141,7 @@ const config = {
         type: 'asset',
         generator: {
           filename({ filename }) {
-            return filename.replace(/^src/, 'assets').replace(/\.(jpe?g|png)$/i, '.webp')
+            return filename.replace(/^src/, 'assets').replace(/\.(jpe?g|png).*$/i, '') + '-[contenthash].webp'
           },
         },
       },
@@ -148,7 +149,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackHarddiskPlugin(),
-    new MiniCssExtractPlugin({ filename: 'assets/css/[name].css' }),
+    new MiniCssExtractPlugin({ filename: 'assets/css/[name]-[contenthash].css' }),
     new CopyPlugin({ patterns: [{ from: 'public', to: '' }] }),
     new CleanWebpackPlugin(),
     new StylelintPlugin({ files: './src/scss/**/*.scss', fix: true, lintDirtyModulesOnly: isDev ? true : false }),
